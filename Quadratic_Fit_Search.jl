@@ -49,6 +49,7 @@ x0 = 3.4
 a,b,c = bracket_minimum(f,x0)
 
 #numero de iteracoes
+φ = MathConstants.φ
 n=(c-a)/(10^-3*log(φ))
 
 am,bm,cm = quadratic_fit_search(f,a,b,c,n)
