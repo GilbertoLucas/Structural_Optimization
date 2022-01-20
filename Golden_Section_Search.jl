@@ -1,7 +1,5 @@
 using Plots
 
-using Plots
-
 function bracket_minimum(f, x=0; s=1e-2, k=2.0)
     a, ya = x, f(x)
     b, yb = a + s, f(a + s)
@@ -55,6 +53,4 @@ am,bm
 
 plot(f,0.,4.,lw=2,draw_arrow="true")
 scatter!([a,c],[f(a),f(c)])
-
-plot(f,0.,4.,lw=2,draw_arrow="true")
-scatter!([am,bm],[ff(am),f(bm)])
+scatter!([am,bm],[f(am),f(bm)])
