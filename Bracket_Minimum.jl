@@ -22,3 +22,8 @@ f = x->sin(10x)+cos(3x)
 x0 = 3.4
 #busca do intervalo
 a,c = bracket_minimum(f,x0)
+
+using Plots
+
+plot(f,0.,4.,lw=2,draw_arrow="true")
+scatter!([a,c],[f(a),f(c)])
