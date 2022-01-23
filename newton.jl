@@ -43,7 +43,7 @@ function newton(f,grad_f,H,x0,tol=1e-6,maxitr=100)
     
     #init data
     ite = 0;x=x0;conv=false;err=0;
-    xh = zeros(length(x0),maxitr);xh[:,1] = x0
+    xh = zeros(length(x0),maxitr+1);xh[:,1] = x0
 
     #iteractions
     while ite < maxitr
