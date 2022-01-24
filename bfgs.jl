@@ -56,7 +56,7 @@ function bfgs(f,grad_f,x0;tol=1e-6,maxitr=10000)
         #line search
         d = -D*g
 
-        #Inexact line search (strongWolg)
+        #Inexact line search (strongWolf)
         alpha = strong_backtracking(f,grad_f,x,d;α=1, β=1e-4, σ=0.1)
 
         #update x
@@ -79,6 +79,7 @@ function bfgs(f,grad_f,x0;tol=1e-6,maxitr=10000)
         if err < tol ; conv=true; break; end
     end
    
+    println(ite+1)
     #return x history. convergence and error
     return xh[:,1:ite+1], conv, err       
 end
@@ -109,9 +110,19 @@ tol = 1e-8
 iterac_max = 10000
 
 #ponto inicial
-u0 = [-0.01,0.0]
-#u0 = [ 0.00,0.0]
+#u0 = [-0.01,0.0]
+u0 = [ 0.00,0.0]
 
+#u*
+@time u_est = bfgs(F,grad_F,u0;tol=tol,maxitr=iterac_max)
+u_est = u_est[1][:,end]
+println("u*: ",u_est)
+println("f(u*): ",F(u_est))
 
-u_est = bfgs(F,grad_F,u0;tol=tol,maxitr=iterac_max)
-u_est= u_est[1][:,end]
+#gradiente no ponto de minimo
+println("∇f(u*): ",grad_F(u_est))
+
+#verificar a hessiana no ponto de minimo
+hess_F(u) = ForwardDiff.hessian(F,u)
+println("H(u*): ",hess_F(u_est))
+println("λ: ",eigvals(hess_F(u_est)))

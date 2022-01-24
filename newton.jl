@@ -69,6 +69,7 @@ function newton(f,grad_f,H,x0,tol=1e-6,maxitr=100)
         if err < tol ; conv=true; break; end
     end
 
+    println("Iteractions: ", ite)
     #return x history. convergence and error
     return xh[:,1:ite+1], conv, err
 end
@@ -103,5 +104,14 @@ iterac_max = 200
 u0 = [-0.01,0.0]
 #u0 = [ 0.00,0.0]
 
-u_est = newton(F,grad_F,Hess_F,u0,tol,iterac_max)
+@time u_est = newton(F,grad_F,Hess_F,u0,tol,iterac_max)
 u_est= u_est[1][:,end]
+println("u*: ",u_est)
+println("f(u*): ",F(u_est))
+
+#gradiente no ponto de minimo
+println("∇f(u*): ",grad_F(u_est))
+
+#verificar a hessiana no ponto de minimo
+println("H(u*): ",Hess_F(u_est))
+println("λ: ",eigvals(Hess_F(u_est)))

@@ -38,6 +38,7 @@ function nelder_mead(f, S, ϵ; α=1.0, β=2.0, γ=0.5)
         Δ = std(y_arr, corrected=false)
         iteractions = iteractions + 1
     end
+    println("Iteractions: ",iteractions)
     return S,iteractions
 end
 
@@ -61,9 +62,10 @@ tol = 1e-8
 
 #ponto inicial
 u0 = [-0.01,0.0]
+#u0 = [0.0,0.0]
 #numero de pontos iniciais = dimensao do problema + 1
-u1 = [u0[1]+0.00001,u0[2]+0.00001]
-u2 = [u0[1]-0.00001,u0[2]+0.00001]
+u1 = [u0[1]-0.00001,u0[2]+0.00001]
+u2 = [u0[1]+0.00001,u0[2]+0.00001]
 u = [u0,u1,u2]
 
 #function
@@ -72,5 +74,6 @@ f(u) = 0.5e0 * ka * (sqrt(u[1] ^ 2 + (La - u[2]) ^ 2) - La) ^ 2 + 0.5e0 * kb * (
 #tolerancia
 tol = 1e-8
 
-u_opt,iterac = nelder_mead(f, u, tol)
-f_opt = f.(u_opt)
+@time u_est,iterac = nelder_mead(f, u, tol)
+println("u*: ",mean(u_est))
+println("f(u*): ",f(mean(u_est)))
